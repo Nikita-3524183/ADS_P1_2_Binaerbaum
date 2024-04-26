@@ -17,10 +17,10 @@ private:
     string m_Name;
     int m_Age;
     double m_Income;
-    int m_Postcode;
+    int m_PostCode;
 
-    TreeNode* m_Left;
-    TreeNode* m_Right;
+    TreeNode* m_left;
+    TreeNode* m_right;
 
 public:
     TreeNode(int nodeOrderID, int nodeChronologicalID, string name, int age, double income, int postcode);
