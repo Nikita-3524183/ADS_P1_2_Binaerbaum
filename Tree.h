@@ -29,7 +29,7 @@ public:
     bool deleteNode(int nordeOrderID);
     bool searchNode(string name);
     void printAll();
-    void printLevelOrder();
+    void levelOrder();
 
     
     // friend-Funktionen sind für die Tests erforderlich und müssen unangetastet

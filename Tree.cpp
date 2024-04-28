@@ -69,22 +69,28 @@ bool Tree::deleteNode(int nodeOrderID){
             //Node hat keine Kinder
             if (current->getLeft() == nullptr && current->getRight() == nullptr){
                 delete current;
+                if (parent == nullptr) m_anker = nullptr;
+                else if (parent->getLeft() == current) parent->setLeft(nullptr);
+                else parent->setRight(nullptr);
                 deleted = true;
                 break;
             }
             //Node hat ein Kind
             else if(current->getLeft() == nullptr || current->getRight() == nullptr){
-                if (current->getLeft() != nullptr){
-                    if (parent->getLeft() == current) parent->setLeft(current->getLeft());
-                    else parent->setRight(current->getLeft());
+                if (parent == nullptr){
+                    if (current->getLeft() != nullptr) m_anker = current->getLeft();
+                    else m_anker = current->getRight();
                 }
                 else{
-                    if (parent->getLeft() == current) parent->setLeft(current->getRight());
-                    else parent->setRight(current->getRight());
+                    if (current->getLeft() != nullptr){
+                        if (parent->getLeft() == current) parent->setLeft(current->getLeft());
+                        else parent->setRight(current->getLeft());
+                    }
+                    else{
+                        if (parent->getLeft() == current) parent->setLeft(current->getRight());
+                        else parent->setRight(current->getRight());
+                    }
                 }
-
-                if (current == m_anker) m_anker = current->getLeft() != nullptr ? current->getLeft() : current->getRight();
-
                 delete current;
                 deleted = true;
                 break;
@@ -136,3 +142,12 @@ bool Tree::deleteNode(int nodeOrderID){
     
     return deleted;
 }
+
+bool Tree::searchNode(string name){return true;};
+
+void Tree::printAll(){};
+void Tree::levelOrder(){};
+
+void Tree::printPreOrder(){};
+void printInOrder(){};
+void printPostOrder(){};

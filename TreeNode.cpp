@@ -29,7 +29,7 @@ int TreeNode::getNodeChronologicalID() { return this->m_NodeChronologicalID; }
 string TreeNode::getName() { return this->m_Name; }
 int TreeNode::getAge() { return this->m_Age; }
 double TreeNode::getIncome() { return this->m_Income; }
-int TreeNode::getPostcode() { return this->m_PostCode; }
+int TreeNode::getPostCode() { return this->m_PostCode; }
 TreeNode* TreeNode::getLeft() { return this->m_left; }
 TreeNode* TreeNode::getRight() { return this->m_right; }
 
@@ -38,7 +38,7 @@ void TreeNode::setNodeChronologicalID(int nodeChronologicalID) { this->m_NodeChr
 void TreeNode::setName(string name) { this->m_Name = name; }
 void TreeNode::setAge(int age) { this->m_Age = age; }
 void TreeNode::setIncome(double income) { this->m_Income = income; }
-void TreeNode::setPostcode(int postcode) { this->m_PostCode = postcode; }
+void TreeNode::setPostCode(int postcode) { this->m_PostCode = postcode; }
 void TreeNode::setLeft(TreeNode* left) { this->m_left = left; }
 void TreeNode::setRight(TreeNode* right) { this->m_right = right; }
 

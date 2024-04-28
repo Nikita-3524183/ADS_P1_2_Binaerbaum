@@ -30,7 +30,7 @@ public:
     string getName();
     int getAge();
     double getIncome();
-    int getPostcode();
+    int getPostCode();
 
     TreeNode* getLeft();
     TreeNode* getRight();
@@ -40,7 +40,7 @@ public:
     void setName(string name);
     void setAge(int age);
     void setIncome(double income);
-    void setPostcode(int postcode);
+    void setPostCode(int postcode);
 
     void setLeft(TreeNode* left);
     void setRight(TreeNode* right);
