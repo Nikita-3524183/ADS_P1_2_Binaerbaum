@@ -76,18 +76,23 @@ bool Tree::deleteNode(int nodeOrderID){
                 break;
             }
             //Node hat ein Kind
-            else if(current->getLeft() == nullptr || current->getRight() == nullptr){
+            else if(current->getLeft() == nullptr && current->getRight() != nullptr 
+            || current->getRight() == nullptr && current->getLeft() != nullptr){
+                //erstes element
                 if (parent == nullptr){
                     if (current->getLeft() != nullptr) m_anker = current->getLeft();
                     else m_anker = current->getRight();
                 }
+                //mitten in der Liste
                 else{
-                    if (current->getLeft() != nullptr){
-                        if (parent->getLeft() == current) parent->setLeft(current->getLeft());
-                        else parent->setRight(current->getLeft());
+                    //ist linkes Kind
+                    if (parent->getLeft() == current){
+                        if (current->getLeft() != nullptr) parent->setLeft(current->getLeft());
+                        else parent->setLeft(current->getRight());
                     }
+                    //ist rechtes Kind
                     else{
-                        if (parent->getLeft() == current) parent->setLeft(current->getRight());
+                        if (current->getLeft() != nullptr) parent->setRight(current->getLeft());
                         else parent->setRight(current->getRight());
                     }
                 }
@@ -129,7 +134,7 @@ bool Tree::deleteNode(int nodeOrderID){
         }
         //weiter nach current suchen
         else{
-            if (current->getNodeOrderID() < nodeOrderID){
+            if (nodeOrderID > current->getNodeOrderID()){
                 parent = current;
                 current = current->getRight();
             }
@@ -143,7 +148,28 @@ bool Tree::deleteNode(int nodeOrderID){
     return deleted;
 }
 
-bool Tree::searchNode(string name){return true;};
+bool Tree::searchNode(string name){
+    bool result = false;
+    queue<TreeNode*> q;
+
+    if(m_anker != nullptr) q.push(m_anker);
+
+    while (!q.empty())
+    {
+        TreeNode* current = q.front();
+        q.pop();
+
+        if (current->getName() == name){
+            result = true;
+            break;
+        }
+
+        if (current->getLeft() != nullptr) q.push(current->getLeft());
+        if (current->getRight() != nullptr) q.push(current->getRight());
+    }
+    
+    return result;
+}
 
 void Tree::printAll(){};
 void Tree::levelOrder(){};

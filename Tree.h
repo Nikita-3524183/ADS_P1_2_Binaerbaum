@@ -7,6 +7,7 @@
 #include "TreeNode.h"
 #include "catch.h"
 #include <string>
+#include <queue>
 
 using namespace std;
 
@@ -20,6 +21,7 @@ private:
     void printPreOrder();
     void printInOrder();
     void printPostOrder();
+
     
 public:
     Tree();

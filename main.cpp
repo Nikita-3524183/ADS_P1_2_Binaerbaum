@@ -61,13 +61,9 @@ void mainscreen_addTreeCSV(Tree*& ref)
 int main()
 {
 
-    int result = Catch::Session().run();
+     int result = Catch::Session().run();
 
-    ///////////////////////////////////////
-    // Ihr Code hier:
     
-    //
-    ///////////////////////////////////////
     system("PAUSE");
 
     return 0;
