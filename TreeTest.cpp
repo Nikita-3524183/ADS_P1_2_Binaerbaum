@@ -14,6 +14,7 @@
 
 using namespace std;
 
+string watcher ="";
 // Friend-Methode fuer Testroutine
 TreeNode* get_anker(Tree& Tr)
 {
@@ -32,11 +33,14 @@ TreeNode* get_anker(Tree& Tr)
  */
 TEST_CASE("Tree Testing", "[TREE]")
 {
+    
 
     Tree* nTree = new Tree();
 
+    watcher = "Hinzufuegen von Nodes und Suche - simple";
     SECTION("Hinzufuegen von Nodes und Suche - simple")
     {
+
 
         nTree->addNode("Mayer", 20, 0, 0);
         nTree->addNode("Mayer2", 10, 0, 0);
@@ -58,6 +62,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(nTree->searchNode("Mayer99") == false);
     }
 
+    watcher = "Loeschen von Nodes - ohne Nachfolger";
     SECTION("Loeschen von Nodes - ohne Nachfolger")
     {
 
@@ -78,6 +83,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(tnanker->getLeft()->getLeft() == nullptr);
     }
 
+    watcher = "Loeschen von Nodes - mit einem Nachfolger";
     SECTION("Loeschen von Nodes - mit einem Nachfolger")
     {
 
@@ -129,6 +135,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(nTree->searchNode("Mayer9") == false);
     }
 
+    watcher = "Loeschen von Nodes - mit zwei Nachfolger";
     SECTION("Loeschen von Nodes - mit zwei Nachfolger")
     {
 
@@ -167,6 +174,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(tnanker->getRight()->getLeft()->getNodeOrderID() == 25);
     }
 
+    watcher = "Loeschen von Nodes - ab Wurzel";
     SECTION("Loeschen von Nodes - ab Wurzel")
     {
 
@@ -183,16 +191,19 @@ TEST_CASE("Tree Testing", "[TREE]")
         /*
         Lösche den Baum schrittweise durch entfernen der Wurzel
         */
+       watcher = "delte 20";
         REQUIRE(tnanker->getNodeOrderID() == 20);
         nTree->deleteNode(20);
         tnanker = get_anker(
             *nTree); // Anker hat sich geändert, neue Übergabe erfoderlich
-
+        
         REQUIRE(tnanker->getNodeOrderID() == 25);
         REQUIRE(tnanker->getRight()->getNodeOrderID() == 30);
+        //hier Fehler
         REQUIRE(tnanker->getRight()->getLeft()->getNodeOrderID() == 26);
         REQUIRE(tnanker->getRight()->getRight()->getNodeOrderID() == 40);
 
+        watcher = "delte 25";
         nTree->deleteNode(25);
         tnanker = get_anker(
             *nTree); // Anker hat sich geändert, neue Übergabe erfoderlich
@@ -202,6 +213,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(tnanker->getRight()->getLeft() == nullptr);
         REQUIRE(tnanker->getRight()->getRight()->getNodeOrderID() == 40);
 
+        watcher = "delte 26";
         nTree->deleteNode(26);
         tnanker = get_anker(
             *nTree); // Anker hat sich geändert, neue Übergabe erfoderlich
@@ -211,6 +223,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(tnanker->getRight()->getLeft()->getNodeOrderID() == 35);
         REQUIRE(tnanker->getRight()->getRight() == nullptr);
 
+        watcher = "delte 30";
         nTree->deleteNode(30);
         tnanker = get_anker(
             *nTree); // Anker hat sich geändert, neue Übergabe erfoderlich
@@ -220,6 +233,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(tnanker->getRight()->getLeft() == nullptr);
         REQUIRE(tnanker->getRight()->getRight() == nullptr);
 
+        watcher = "delte 35";
         nTree->deleteNode(35);
         tnanker = get_anker(
             *nTree); // Anker hat sich geändert, neue Übergabe erfoderlich
@@ -228,6 +242,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(tnanker->getRight() == nullptr);
         REQUIRE(tnanker->getLeft()->getNodeOrderID() == 10);
 
+        watcher = "delte 40";
         nTree->deleteNode(40);
         tnanker = get_anker(
             *nTree); // Anker hat sich geändert, neue Übergabe erfoderlich
@@ -236,6 +251,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(tnanker->getRight() == nullptr);
         REQUIRE(tnanker->getLeft() == nullptr);
 
+        watcher = "delte 10";
         nTree->deleteNode(10);
         tnanker = get_anker(
             *nTree); // Anker hat sich geändert, neue Übergabe erfoderlich
@@ -243,6 +259,7 @@ TEST_CASE("Tree Testing", "[TREE]")
         REQUIRE(tnanker == nullptr);
     }
 
+    watcher = "Hinzufuegen von Nodes - Erzeuge Grossbaum";
     SECTION("Hinzufuegen von Nodes - Erzeuge Grossbaum")
     {
 

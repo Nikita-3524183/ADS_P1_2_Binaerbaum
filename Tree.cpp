@@ -102,6 +102,7 @@ bool Tree::deleteNode(int nodeOrderID){
             }
             //Node hat zwei Kinder
             else{
+                //ermitteln das min rechter Teilbaum
                 TreeNode* minNode = current->getRight();
                 TreeNode* minParent = current;
                 while (minNode->getLeft() != nullptr)
@@ -109,23 +110,21 @@ bool Tree::deleteNode(int nodeOrderID){
                     minParent = minNode;
                     minNode = minNode->getLeft();
                 }
-
-                if (parent == nullptr) {
-                    m_anker = minNode;
-                } else if (parent->getLeft() == current) {
-                    parent->setLeft(minNode);
-                } else {
-                    parent->setRight(minNode);
-                }
-
+                
+                if(minParent->getRight() != minNode){
+                    if(minNode->getRight() != nullptr){
+                    minParent->setLeft(minNode->getRight());
+                    }
+                    else{
+                        minParent->setLeft(nullptr);
+                    }
+                }       
                 minNode->setLeft(current->getLeft());
-                if (minParent != current) {
-                    minNode->setRight(current->getRight());
-                }
+                if(minNode != current->getRight()) minNode->setRight(current->getRight());
 
-                if (minParent->getLeft() == minNode) minParent->setLeft(nullptr);
-                else minParent->setRight(nullptr);
-                if (current == m_anker) m_anker = minNode;
+                if (parent == nullptr) m_anker = minNode;
+                else if (parent->getLeft() == current) parent->setLeft(minNode);
+                else parent->setRight(minNode);
 
                 delete current;
                 deleted = true;
