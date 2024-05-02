@@ -18,11 +18,13 @@ private:
     TreeNode* m_anker;
     int m_CurrentNodeChronologicalID;
 
-    void printPreOrder();
-    void printInOrder();
-    void printPostOrder();
+    void  printPreOrder();
+    void  printInOrder();
+    void  printPostOrder();
 
-    
+    void preOrderHelper(TreeNode* node);
+    void inOrderHelper(TreeNode* node);
+    void postOrderHelper(TreeNode* node);
 public:
     Tree();
     ~Tree();

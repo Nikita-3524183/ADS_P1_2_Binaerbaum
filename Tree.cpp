@@ -10,15 +10,27 @@
 
 using namespace std;
 
-Tree::Tree()
-{
-    m_anker = nullptr;
-    m_CurrentNodeChronologicalID = 0;
-}
+Tree::Tree(): m_anker(nullptr), m_CurrentNodeChronologicalID(0){}
 
 Tree::~Tree()
 {
-    //TODO: Delete des ganzes Baumes
+    queue<TreeNode*> q;
+
+    if(m_anker != nullptr) q.push(m_anker);
+
+    while (!q.empty())
+    {
+        TreeNode* current = q.front();
+        q.pop();
+
+        
+
+        if (current->getLeft() != nullptr) q.push(current->getLeft());
+        if (current->getRight() != nullptr) q.push(current->getRight());
+
+        delete current;
+    }
+    
 }
 
 void Tree::addNode(string name, int age, double income, int postcode)
@@ -68,10 +80,11 @@ bool Tree::deleteNode(int nodeOrderID){
         if (current->getNodeOrderID() == nodeOrderID){
             //Node hat keine Kinder
             if (current->getLeft() == nullptr && current->getRight() == nullptr){
-                delete current;
                 if (parent == nullptr) m_anker = nullptr;
                 else if (parent->getLeft() == current) parent->setLeft(nullptr);
                 else parent->setRight(nullptr);
+                                
+                delete current;
                 deleted = true;
                 break;
             }
@@ -80,20 +93,17 @@ bool Tree::deleteNode(int nodeOrderID){
             || current->getRight() == nullptr && current->getLeft() != nullptr){
                 //erstes element
                 if (parent == nullptr){
-                    if (current->getLeft() != nullptr) m_anker = current->getLeft();
-                    else m_anker = current->getRight();
+                    m_anker = (current->getLeft() != nullptr) ? current->getLeft() : current->getRight();
                 }
                 //mitten in der Liste
                 else{
                     //ist linkes Kind
                     if (parent->getLeft() == current){
-                        if (current->getLeft() != nullptr) parent->setLeft(current->getLeft());
-                        else parent->setLeft(current->getRight());
+                        parent->setLeft((current->getLeft() != nullptr) ? current->getLeft() : current->getRight());
                     }
                     //ist rechtes Kind
                     else{
-                        if (current->getLeft() != nullptr) parent->setRight(current->getLeft());
-                        else parent->setRight(current->getRight());
+                        parent->setRight((current->getLeft() != nullptr) ? current->getLeft() : current->getRight());
                     }
                 }
                 delete current;
@@ -111,18 +121,18 @@ bool Tree::deleteNode(int nodeOrderID){
                     minNode = minNode->getLeft();
                 }
                 
+                //nur Pointer umbiegen falls minNode nicht direktes Kind von min Parent
                 if(minParent->getRight() != minNode){
-                    if(minNode->getRight() != nullptr){
-                    minParent->setLeft(minNode->getRight());
-                    }
-                    else{
-                        minParent->setLeft(nullptr);
-                    }
-                }       
+                    minParent->setLeft((minNode->getRight() != nullptr) ? minNode->getRight() : nullptr);                  
+                }
+
                 minNode->setLeft(current->getLeft());
+                //falls der zulöschende Node parent von minNode ist, keine schleife erzeugen
                 if(minNode != current->getRight()) minNode->setRight(current->getRight());
 
+                //wenn parent == nullptr sind wir anker
                 if (parent == nullptr) m_anker = minNode;
+                //seite von parent rausfinden und pointer auf den neun Node setzen
                 else if (parent->getLeft() == current) parent->setLeft(minNode);
                 else parent->setRight(minNode);
 
@@ -170,9 +180,77 @@ bool Tree::searchNode(string name){
     return result;
 }
 
-void Tree::printAll(){};
-void Tree::levelOrder(){};
+void Tree::printAll(){
+    cout << "Ausgabereihenfolge ?>";
+    string in;
+    
 
-void Tree::printPreOrder(){};
-void printInOrder(){};
-void printPostOrder(){};
+    while (true)
+    {
+        cin >> in;
+    if (in == "pre"){ 
+        printPreOrder();
+        break;
+    }
+    else if (in == "in"){
+        printInOrder();
+        break;
+    }
+    
+    else if (in == "post"){
+        printPostOrder();
+        break;
+    }
+    else cout << "Falsche Eingabe" << endl;    
+    }
+    
+    
+};
+void Tree::levelOrder(){
+    queue<TreeNode*> q;
+
+    if(m_anker != nullptr) q.push(m_anker);
+
+    while (!q.empty())
+    {
+        TreeNode* current = q.front();
+        q.pop();
+
+        cout << current->getNodeOrderID() << " " << current->getName() << " " << current->getAge() << " " << current->getIncome() << " " << current->getPostCode() << endl;
+
+        if (current->getLeft() != nullptr) q.push(current->getLeft());
+        if (current->getRight() != nullptr) q.push(current->getRight());
+    }
+};
+
+void Tree::printPreOrder(){
+    cout << "id name age income postcode" << endl;
+    preOrderHelper(m_anker);
+}
+
+void Tree::preOrderHelper(TreeNode* node){
+    
+    cout << node->getNodeOrderID() << " " << node->getName() << " " << node->getAge() << " " << node->getIncome() << " " << node->getPostCode() << endl;
+    if (node->getLeft() != nullptr) preOrderHelper(node->getLeft());
+    if (node->getRight() != nullptr) preOrderHelper(node->getRight());
+}
+void Tree::printInOrder(){
+    cout << "id name age income postcode" << endl;
+    inOrderHelper(m_anker);
+};
+
+void Tree::inOrderHelper(TreeNode* node){
+    if (node->getLeft() != nullptr) inOrderHelper(node->getLeft());
+    cout << node->getNodeOrderID() << " " << node->getName() << " " << node->getAge() << " " << node->getIncome() << " " << node->getPostCode() << endl;
+    if (node->getRight() != nullptr) inOrderHelper(node->getRight());
+}
+void Tree::printPostOrder(){
+    cout << "id name age income postcode" << endl;
+    postOrderHelper(m_anker);
+};
+
+void Tree::postOrderHelper(TreeNode* node){
+    if (node->getLeft() != nullptr) postOrderHelper(node->getLeft());
+    if (node->getRight() != nullptr) postOrderHelper(node->getRight());
+    cout << node->getNodeOrderID() << " " << node->getName() << " " << node->getAge() << " " << node->getIncome() << " " << node->getPostCode() << endl;
+}

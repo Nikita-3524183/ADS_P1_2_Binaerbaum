@@ -63,7 +63,8 @@ int main()
 
     int result =  0;
     result =Catch::Session().run();
-    
+
+
     system("PAUSE");
 
     return result;
