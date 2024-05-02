@@ -104,18 +104,20 @@ int main()
             cout << "Postleitzahl ?>";
             cin >> postcode;
             tree->addNode(name, age, income, postcode);
+            cout << "Daten hinzugefuegt" << endl;
             break;
         case 3:
             cout << "ID ?>";
             cin >> nodeOrderID;
             tree->deleteNode(nodeOrderID);
+            cout << "Daten geloescht" << endl;
             break;
         case 4:
             cout << "Name ?>";
             cin >> name;
             if (tree->searchNode(name)){
-                cout << "Gefunden" << endl;
-                tree->printNode(name);              
+                cout << "Gefunden in:" << endl;
+                tree->printNodes(name);
             } 
             else cout << "Nicht gefunden" << endl;
             break;

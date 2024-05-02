@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <iostream>
 
+
 using namespace std;
 
 Tree::Tree(): m_anker(nullptr), m_CurrentNodeChronologicalID(0){}
@@ -168,16 +169,36 @@ bool Tree::searchNode(string name){
         TreeNode* current = q.front();
         q.pop();
 
-        if (current->getName() == name){
+        if (current->getName() == name)
+        {
             result = true;
             break;
+        }
+        if (current->getLeft() != nullptr) q.push(current->getLeft());
+        if (current->getRight() != nullptr) q.push(current->getRight());
+    }
+    return result;
+}
+
+void Tree::printNodes(string name){
+    queue<TreeNode*> q;
+    string out = "";
+
+    if(m_anker != nullptr) q.push(m_anker);
+
+    while (!q.empty())
+    {
+        TreeNode* current = q.front();
+        q.pop();
+
+        if (current->getName() == name){
+            out.append(to_string(current->getNodeOrderID()) + " " + current->getName() + " " + to_string(current->getAge()) + " " + to_string(current->getIncome()) + " " + to_string(current->getPostCode()) + "\n");
         }
 
         if (current->getLeft() != nullptr) q.push(current->getLeft());
         if (current->getRight() != nullptr) q.push(current->getRight());
     }
-    
-    return result;
+    cout << out;
 }
 
 void Tree::printAll(){
@@ -206,10 +227,46 @@ void Tree::printAll(){
     
     
 };
+
+void Tree::printTHead(bool level){
+    if (level)
+    {
+        cout << setw(lenID) << "id" << "|"
+        << setw(lenName) << "name" << "|"
+        << setw(lenAge) << "age" << "|"
+        << setw(lenIncome) << "income" << "|"
+        << setw(lenPostcode) << "postcode" << "|"
+        << setw(lenLevel) << "level"<< "|" << endl;
+
+        cout << setfill('-') << setw(lenID) << "-" << "+"
+        << setw(lenName) << "-" << "+"
+        << setw(lenAge) << "-" << "+"
+        << setw(lenIncome) << "-" << "+"
+        << setw(lenPostcode) << "-" << "+"
+        << setw(lenLevel) << "-" << setfill(' ') << endl;
+    }
+    else{
+        cout << setw(lenID) << "id" << "|"
+        << setw(lenName) << "name" << "|"
+        << setw(lenAge) << "age" << "|"
+        << setw(lenIncome) << "income" << "|"
+        << setw(lenPostcode) << "postcode" << "|" << endl;
+
+        cout << setfill('-') << setw(lenID) << "-" << "+"
+        << setw(lenName) << "-" << "+"
+        << setw(lenAge) << "-" << "+"
+        << setw(lenIncome) << "-" << "+"
+        << setw(lenPostcode) << "-" << setfill(' ') << endl;
+    }
+    
+    
+}
+
 void Tree::levelOrder(){
     queue<TreeNode*> q;
     queue<int> level({0});
-    cout << "id name age income postcode level" << endl;
+    
+    printTHead(true);
 
     if(m_anker != nullptr) q.push(m_anker);
 
@@ -218,7 +275,8 @@ void Tree::levelOrder(){
         TreeNode* current = q.front();
         q.pop();
 
-        cout << current->getNodeOrderID() << " " << current->getName() << " " << current->getAge() << " " << current->getIncome() << " " << current->getPostCode() << " " << level.front() <<endl;
+        current->print();
+        cout << std::setw(lenLevel) << level.front() << "|" << endl;
 
         if (current->getLeft() != nullptr)
         {
@@ -235,52 +293,36 @@ void Tree::levelOrder(){
 };
 
 void Tree::printPreOrder(){
-    cout << "id name age income postcode" << endl;
+    printTHead(false);
     preOrderHelper(m_anker);
 }
 
 void Tree::preOrderHelper(TreeNode* node){
     
-    cout << node->getNodeOrderID() << " " << node->getName() << " " << node->getAge() << " " << node->getIncome() << " " << node->getPostCode() << endl;
+    node->print();
+    cout << endl;
     if (node->getLeft() != nullptr) preOrderHelper(node->getLeft());
     if (node->getRight() != nullptr) preOrderHelper(node->getRight());
 }
 void Tree::printInOrder(){
-    cout << "id name age income postcode" << endl;
+    printTHead(false);
     inOrderHelper(m_anker);
 };
 
 void Tree::inOrderHelper(TreeNode* node){
     if (node->getLeft() != nullptr) inOrderHelper(node->getLeft());
-    cout << node->getNodeOrderID() << " " << node->getName() << " " << node->getAge() << " " << node->getIncome() << " " << node->getPostCode() << endl;
+    node->print();
+    cout << endl;
     if (node->getRight() != nullptr) inOrderHelper(node->getRight());
 }
 void Tree::printPostOrder(){
-    cout << "id name age income postcode" << endl;
+    printTHead(false);
     postOrderHelper(m_anker);
 };
 
 void Tree::postOrderHelper(TreeNode* node){
     if (node->getLeft() != nullptr) postOrderHelper(node->getLeft());
     if (node->getRight() != nullptr) postOrderHelper(node->getRight());
-    cout << node->getNodeOrderID() << " " << node->getName() << " " << node->getAge() << " " << node->getIncome() << " " << node->getPostCode() << endl;
-}
-
-void Tree::printNode(string name){
-    queue<TreeNode*> q;
-
-    if(m_anker != nullptr) q.push(m_anker);
-
-    while (!q.empty())
-    {
-        TreeNode* current = q.front();
-        q.pop();
-
-        if (current->getName() == name){
-            cout << current->getNodeOrderID() << " " << current->getName() << " " << current->getAge() << " " << current->getIncome() << " " << current->getPostCode() << endl;
-            break;
-        }
-        if (current->getLeft() != nullptr) q.push(current->getLeft());
-        if (current->getRight() != nullptr) q.push(current->getRight());
-    }
+    node->print();
+    cout << endl;
 }

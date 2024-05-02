@@ -25,6 +25,8 @@ private:
     void preOrderHelper(TreeNode* node);
     void inOrderHelper(TreeNode* node);
     void postOrderHelper(TreeNode* node);
+
+    void printTHead(bool level);
 public:
     Tree();
     ~Tree();
@@ -34,7 +36,7 @@ public:
     bool searchNode(string name);
     void printAll();
     void levelOrder();
-    void printNode(string name);
+    void printNodes(string name);
 
     
     // friend-Funktionen sind für die Tests erforderlich und müssen unangetastet

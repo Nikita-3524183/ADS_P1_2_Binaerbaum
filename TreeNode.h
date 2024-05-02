@@ -6,6 +6,14 @@
 #pragma once
 #include <string>
 
+#define lenID 5
+#define lenName 20
+#define lenAge 5
+#define lenIncome 10
+#define lenPostcode 10
+#define lenLevel 5
+
+
 using namespace std;
 
 class TreeNode

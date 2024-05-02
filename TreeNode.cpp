@@ -6,6 +6,8 @@
 #include "TreeNode.h"
 #include <iostream>
 #include <string>
+#include <iostream>
+#include <iomanip>
 
 TreeNode::TreeNode(int    nNodePos,
                    int    id,
@@ -44,12 +46,9 @@ void TreeNode::setRight(TreeNode* right) { this->m_right = right; }
 
 void TreeNode::print()
 {
-    cout << "NodeOrderID: " << this->m_NodeOrderID << endl;
-    cout << "NodeChronologicalID: " << this->m_NodeChronologicalID << endl;
-    cout << "Name: " << this->m_Name << endl;
-    cout << "Age: " << this->m_Age << endl;
-    cout << "Income: " << this->m_Income << endl;
-    cout << "Postcode: " << this->m_PostCode << endl;
-    cout << "Left: " << this->m_left << endl;
-    cout << "Right: " << this->m_right << endl;
+    cout << std::setw(lenID) << this->getNodeOrderID() << "|"
+        << std::setw(lenName) << this->getName() << "|"
+        << std::setw(lenAge) << this->getAge() << "|"
+        << std::setw(lenIncome) << this->getIncome() << "|"
+        << std::setw(lenPostcode) << this->getPostCode() << "|";
 }
