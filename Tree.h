@@ -34,6 +34,7 @@ public:
     bool searchNode(string name);
     void printAll();
     void levelOrder();
+    void printNode(string name);
 
     
     // friend-Funktionen sind für die Tests erforderlich und müssen unangetastet

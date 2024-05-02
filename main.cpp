@@ -56,6 +56,18 @@ void mainscreen_addTreeCSV(Tree*& ref)
     }
 }
 
+void menu(){
+    cout << "1. Daten aus CSV-Datei importieren" << endl;
+    cout << "2. Daten hinzufuegen, manuell" << endl;
+    cout << "3. Daten loeschen" << endl;
+    cout << "4. Daten suchen" << endl;
+    cout << "5. Daten ausgeben (pre/post/in)" << endl;
+    cout << "6. Level Order ausgabe" << endl;
+    cout << "7. Programm beenden" << endl;
+    cout << "?> ";
+
+}
+
 //
 ///////////////////////////////////////
 int main()
@@ -63,7 +75,61 @@ int main()
 
     int result =  0;
     result =Catch::Session().run();
+    Tree* tree = new Tree();
+    int input = 0;
+    string name;
+    int age;
+    double income;
+    int postcode;
+    int nodeOrderID;
 
+
+    while (input != 7)
+    {
+        menu();
+        
+        cin >> input;
+        switch (input)
+        {
+        case 1:
+            mainscreen_addTreeCSV(tree);
+            break;
+        case 2:           
+            cout << "Name ?>";
+            cin >> name;
+            cout << "Alter ?>";
+            cin >> age;
+            cout << "Einkommen ?>";
+            cin >> income;
+            cout << "Postleitzahl ?>";
+            cin >> postcode;
+            tree->addNode(name, age, income, postcode);
+            break;
+        case 3:
+            cout << "ID ?>";
+            cin >> nodeOrderID;
+            tree->deleteNode(nodeOrderID);
+            break;
+        case 4:
+            cout << "Name ?>";
+            cin >> name;
+            if (tree->searchNode(name)){
+                cout << "Gefunden" << endl;
+                tree->printNode(name);              
+            } 
+            else cout << "Nicht gefunden" << endl;
+            break;
+        case 5:
+            tree->printAll();
+            break;
+        case 6:
+            tree->levelOrder();
+            break;
+        case 7:
+            break;
+        }
+    
+    }
 
     system("PAUSE");
 

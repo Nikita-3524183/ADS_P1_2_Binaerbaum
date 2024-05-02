@@ -208,6 +208,8 @@ void Tree::printAll(){
 };
 void Tree::levelOrder(){
     queue<TreeNode*> q;
+    queue<int> level({0});
+    cout << "id name age income postcode level" << endl;
 
     if(m_anker != nullptr) q.push(m_anker);
 
@@ -216,10 +218,19 @@ void Tree::levelOrder(){
         TreeNode* current = q.front();
         q.pop();
 
-        cout << current->getNodeOrderID() << " " << current->getName() << " " << current->getAge() << " " << current->getIncome() << " " << current->getPostCode() << endl;
+        cout << current->getNodeOrderID() << " " << current->getName() << " " << current->getAge() << " " << current->getIncome() << " " << current->getPostCode() << " " << level.front() <<endl;
 
-        if (current->getLeft() != nullptr) q.push(current->getLeft());
-        if (current->getRight() != nullptr) q.push(current->getRight());
+        if (current->getLeft() != nullptr)
+        {
+            q.push(current->getLeft());
+            level.push(level.front() + 1);
+        } 
+        if (current->getRight() != nullptr)
+        {
+            q.push(current->getRight());
+            level.push(level.front() + 1);
+        }
+        level.pop();
     }
 };
 
@@ -253,4 +264,23 @@ void Tree::postOrderHelper(TreeNode* node){
     if (node->getLeft() != nullptr) postOrderHelper(node->getLeft());
     if (node->getRight() != nullptr) postOrderHelper(node->getRight());
     cout << node->getNodeOrderID() << " " << node->getName() << " " << node->getAge() << " " << node->getIncome() << " " << node->getPostCode() << endl;
+}
+
+void Tree::printNode(string name){
+    queue<TreeNode*> q;
+
+    if(m_anker != nullptr) q.push(m_anker);
+
+    while (!q.empty())
+    {
+        TreeNode* current = q.front();
+        q.pop();
+
+        if (current->getName() == name){
+            cout << current->getNodeOrderID() << " " << current->getName() << " " << current->getAge() << " " << current->getIncome() << " " << current->getPostCode() << endl;
+            break;
+        }
+        if (current->getLeft() != nullptr) q.push(current->getLeft());
+        if (current->getRight() != nullptr) q.push(current->getRight());
+    }
 }
